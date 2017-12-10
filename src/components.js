@@ -797,8 +797,12 @@ export class Form extends React.Component {
   }
 
   getComponent(path) {
-    const points = t.String.is(path) ? path.split('.') : path
-    return points.reduce((input, name) => input.refs[name], this.refs.input)
+    if(t.String.is(path)) {
+      return this.refs.input.refs[path]
+    }
+    if(Array.isArray(path)) {
+      return path.reduce((input, name) => input.refs[name], this.refs.input)
+    }
   }
 
   getSeed() {
